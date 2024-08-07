@@ -1,5 +1,6 @@
-#:schema https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json
+# :schema https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json
 
+"$schema" = "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json"
 version = 2
 final_space = true
 console_title_template = '{{ .Shell }} in {{ .Folder }}'
@@ -66,10 +67,10 @@ console_title_template = '{{ .Shell }} in {{ .Folder }}'
   [[blocks.segments]]
     type = 'status'
     style = 'diamond'
-    background_templates = ['p:red']
+    background_templates = ['{{ if gt .Code 0 }}p:red{{ end }}']
     leading_diamond = '<transparent,background></>'
     trailing_diamond = ''
-    template = ' CONFIG ERROR '
+    template = ' {{ if gt .Code 0 }}{{ else }}{{ end }} '
     background = 'p:blue'
     foreground = 'p:white'
     Text = ''
