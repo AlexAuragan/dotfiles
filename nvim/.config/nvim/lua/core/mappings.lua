@@ -137,7 +137,7 @@ M.lspconfig = {
       "LSP declaration",
     },
 
-    ["gd"] = {
+    ["gt"] = {
       function()
         vim.lsp.buf.definition()
       end,

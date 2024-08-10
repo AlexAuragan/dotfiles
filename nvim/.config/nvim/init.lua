@@ -1,5 +1,7 @@
 require "core"
 
+require("custom.autocommands")
+
 local custom_init_path = vim.api.nvim_get_runtime_file("lua/custom/init.lua", false)[1]
 
 if custom_init_path then
@@ -32,3 +34,15 @@ dap.adapters.python = {
     logToFile = true
   }
 }
+
+
+require'nvim-treesitter.configs'.setup {
+    ensure_installed = { "json", "python", "markdown" }, -- List of parsers to install
+    highlight = {
+        enable = true,              -- false will disable the whole extension
+        disable = {},               -- list of language that will be disabled
+    },
+}
+
+require("custom.configs.ufo")
+

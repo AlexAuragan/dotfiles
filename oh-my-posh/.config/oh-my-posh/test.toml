@@ -1,6 +1,5 @@
-# :schema https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json
+#:schema https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json
 
-"$schema" = "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json"
 version = 2
 final_space = true
 console_title_template = '{{ .Shell }} in {{ .Folder }}'
@@ -14,12 +13,15 @@ console_title_template = '{{ .Shell }} in {{ .Folder }}'
     style = 'diamond'
     powerline_symbol = ''
     leading_diamond = '<p:green,transparent>'
+    template = '{{ .Venv }}'
     background = 'p:green'
     foreground = 'p:black'
-    template = '{{ .Venv }}'
-   [blocks.segments.properties]
-      always_enabled = true
+    Text = ''
+    Duration = 0
+    NameLength = 0
 
+    [blocks.segments.properties]
+      always_enabled = true
 
   [[blocks.segments]]
     type = 'path'
@@ -194,7 +196,6 @@ console_title_template = '{{ .Shell }} in {{ .Folder }}'
   Duration = 0
   NameLength = 0
 
-# Catppuccin palette 
 [palette]
   black = '#1e1e2e'
   blue = '#89b4fa	'
