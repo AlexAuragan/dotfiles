@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Add the following to your crontab to this script is run everyday at 9, 18 and 19
+# 0 9,18,19 * * * /bin/bash ~/dotfiles/update_repos.sh >> ~/dotfiles/update_repos.log 2>&1
+
 # Define folders and commit message
 VAULT_DIR="$HOME/Vault"
 DOTFILES_DIR="$HOME/dotfiles"
