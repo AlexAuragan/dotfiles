@@ -45,4 +45,3 @@ require'nvim-treesitter.configs'.setup {
 }
 
 require("custom.configs.ufo")
-

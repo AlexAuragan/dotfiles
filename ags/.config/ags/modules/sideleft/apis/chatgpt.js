@@ -25,6 +25,7 @@ const ProviderSwitcher = () => {
                 self.toggleClassName('invisible', GPTService.providerID !== id);
             }, 'providerChanged')
         });
+
         return Button({
             tooltipText: provider.description,
             onClicked: () => {

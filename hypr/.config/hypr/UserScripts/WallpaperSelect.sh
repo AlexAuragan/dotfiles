@@ -6,7 +6,7 @@
 LOGFILE="$HOME/swww_debug.log"
 
 # WALLPAPERS PATH
-wallDIR="$HOME/Pictures/wallpapers/catppuccin/"
+wallDIR="$HOME/Pictures/wallpapers/"
 
 # variables
 SCRIPTSDIR="$HOME/.config/hypr/scripts"

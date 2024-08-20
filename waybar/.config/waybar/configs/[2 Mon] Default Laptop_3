@@ -65,7 +65,8 @@
 "margin-right": 8,
 
 "modules-left": [
-	"network#speed",
+	"cpu",
+  "memory",
 	],
 
 "modules-center": [

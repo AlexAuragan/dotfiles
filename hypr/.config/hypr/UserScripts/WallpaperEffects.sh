@@ -8,6 +8,7 @@ current_wallpaper="$HOME/.config/hypr/wallpaper_effects/.wallpaper_current"
 wallpaper_output="$HOME/.config/hypr/wallpaper_effects/.wallpaper_modified"
 SCRIPTSDIR="$HOME/.config/hypr/scripts"
 focused_monitor=$(hyprctl monitors | awk '/^Monitor/{name=$2} /focused: yes/{print name}')
+catppuccin_mocha="$HOME/.config/hypr/UserScripts/themes/catppuccin-mocha.png"
 
 # Directory for swaync
 iDIR="$HOME/.config/swaync/images"
@@ -21,7 +22,6 @@ SWWW_PARAMS="--transition-fps $FPS --transition-type $TYPE --transition-duration
 
 # Define ImageMagick effects
 # https://imagemagick.org/script/magick.php
-
 declare -A effects=(
 ["Black & White"]="magick $current_wallpaper -colorspace gray -sigmoidal-contrast 10,40% $wallpaper_output"
 ["Blurred"]="magick $current_wallpaper -blur 0x5 $wallpaper_output"
@@ -36,6 +36,7 @@ declare -A effects=(
 ["Vignette"]="magick $current_wallpaper -vignette 0x5 $wallpaper_output"
 ["Posterize"]="magick $current_wallpaper -posterize 4 $wallpaper_output"
 ["Polaroid"]="magick $current_wallpaper -polaroid 0 $wallpaper_output"
+["Catppuccin-mocha"]="magick $current_wallpaper +dither -remap $catppuccin_mocha $wallpaper_output"
 ["No Effects"]="no-effects"
 )
 
