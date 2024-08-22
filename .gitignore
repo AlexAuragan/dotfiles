@@ -2,3 +2,9 @@ vscode/.vscode/extensions/ms-python.python-2024.10.0-linux-x64/*
 codeium/.codeium/code_tracker/*
 .DS_Store
 *.log
+
+# files that changes with theme
+ags/.config/ags/user/style.css
+kitty/.config/kitty/current-theme.conf
+oh-my-posh/.config/oh-my-posh/zen.toml
+waybar/.config/waybar/wallust/colors-waybar.css
