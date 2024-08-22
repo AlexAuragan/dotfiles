@@ -4,10 +4,11 @@ codeium/.codeium/code_tracker/*
 *.log
 
 # files that changes with theme
-*.config/ags/user/style.css
-*.config/oh-my-posh/zen.toml
-*.config/kitty/kitty.conf
-*.config/kitty/current-theme.conf
-*.config/waybar/style.css
-*.config/waybar/wallust/colors-waybar.css
-*.config/hypr/wallpaper_effects/.wallpaper_current
+ags/.config/ags/user/
+hypr/.config/hypr/wallpaper_effects/.wallpaper_current
+kitty/.config/kitty/current-theme.conf
+kitty/.config/kitty/kitty.conf
+oh-my-posh/.config/oh-my-posh/zen.toml
+waybar/.config/waybar/style.css
+waybar/.config/waybar/wallust/
+
