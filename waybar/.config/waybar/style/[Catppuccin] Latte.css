@@ -16,7 +16,7 @@ window#waybar {
   transition-property: background-color;
   transition-duration: 0.5s;
   border-bottom: 2px solid @sapphire;
-  background: @theme_base_color;
+  background: @base;
   border-radius: 10px;
 }
 
@@ -145,7 +145,7 @@ window#waybar.empty #window {
 
 #battery.critical:not(.charging) {
   	background-color: @red;
-  	color: @theme_text_color;
+  	color: @text;
   	animation-name: blink;
   	animation-duration: 0.5s;
   	animation-timing-function: linear;

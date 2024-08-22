@@ -15,6 +15,7 @@ notif="$HOME/.config/swaync/images/bell.png"
 wallust_rofi="$HOME/.config/wallust/templates/colors-rofi.rasi"
 
 kitty_conf="$HOME/.config/kitty/kitty.conf"
+omp_conf="$HOME/.config/oh-my-posh/"
 
 wallust_config="$HOME/.config/wallust/wallust.toml"
 pallete_dark="dark16"
@@ -64,6 +65,12 @@ set_waybar_style() {
     waybar_styles="$HOME/.config/waybar/style"
     waybar_style_link="$HOME/.config/waybar/style.css"
     style_prefix="\\[${theme}\\].*\\.css$"
+    
+    if [ "$next_mode" = "Dark" ]; then
+      style_prefix="\\[Mocha\\].*\\.css$"
+    else
+      style_prefix="\\[Latte\\].*\\.css$"
+    fi
 
     style_file=$(find "$waybar_styles" -maxdepth 1 -type f -regex ".*$style_prefix" | shuf -n 1)
 
@@ -101,16 +108,19 @@ fi
 
 # kitty background color change
 if [ "$next_mode" = "Dark" ]; then
-    sed -i '/^foreground /s/^foreground .*/foreground #dddddd/' "${kitty_conf}"
-	sed -i '/^background /s/^background .*/background #000000/' "${kitty_conf}"
-	sed -i '/^cursor /s/^cursor .*/cursor #dddddd/' "${kitty_conf}"
+  kitty +kitten themes --reload-in=all Catppuccin-Mocha
+
 else
-	sed -i '/^foreground /s/^foreground .*/foreground #000000/' "${kitty_conf}"
-	sed -i '/^background /s/^background .*/background #dddddd/' "${kitty_conf}"
-	sed -i '/^cursor /s/^cursor .*/cursor #000000/' "${kitty_conf}"
+  kitty +kitten themes --reload-in=all Catppuccin-Latte
 fi
 
-
+# oh-my-posh theme change
+if [ "$next_mode" = "Dark" ]; then
+  cp "$omp_conf/zen-mocha.toml" "$omp_conf/zen.toml"
+else
+  cp "$omp_conf/zen-latte.toml" "$omp_conf/zen.toml" 
+fi
+eval "$(oh-my-posh init $(basename $SHELL) --config $omp_conf/zen.toml)"
 
 
 # Set Dynamic Wallpaper for Dark or Light Mode
@@ -119,6 +129,8 @@ if [ "$next_mode" = "Dark" ]; then
 else
     next_wallpaper="$(find "${light_wallpapers}" -type f \( -iname "*.jpg" -o -iname "*.png" \) -print0 | shuf -n1 -z | xargs -0)"
 fi
+eval "$(oh-my-posh init $(basename $SHELL) --config $omp_conf/zen.toml)"
+
 
 # Update wallpaper using swww command
 $swww "${next_wallpaper}" $effect
@@ -159,14 +171,16 @@ set_custom_gtk_theme() {
 
     if [ "$mode" == "Light" ]; then
         search_keywords="*Light*"
-        gsettings set $color_setting 'prefer-light'
+        color_scheme='prefer-light'
     elif [ "$mode" == "Dark" ]; then
         search_keywords="*Dark*"
-        gsettings set $color_setting 'prefer-dark'
+        color_scheme='prefer-dark'
     else
         echo "Invalid mode provided."
         return 1
     fi
+
+    gsettings set $color_setting "$color_scheme"
 
     themes=()
     icons=()

@@ -197,7 +197,7 @@ console_title_template = '{{ .Shell }} in {{ .Folder }}'
 # Catppuccin palette 
 [palette]
   black = '#1e1e2e'
-  blue = '#89b4fa	'
+  blue = '#89b4fa'
   green = '#a6e3a1'
   orange = '#fab387'
   red = '#f38ba8'
