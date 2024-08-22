@@ -8,6 +8,7 @@ ags/.config/ags/user/
 hypr/.config/hypr/wallpaper_effects/.wallpaper_current
 kitty/.config/kitty/current-theme.conf
 kitty/.config/kitty/kitty.conf
+kitty/.config/kitty/kitty.conf.bak
 oh-my-posh/.config/oh-my-posh/zen.toml
 waybar/.config/waybar/style.css
 waybar/.config/waybar/wallust/
