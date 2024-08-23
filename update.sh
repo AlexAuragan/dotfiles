@@ -29,5 +29,5 @@ update_repo "$VAULT_DIR" "$COMMIT_MSG"
 
 # Update dotfiles repository
 update_repo "$DOTFILES_DIR" "$COMMIT_MSG"
-
+notify-send "Daily Update" "All repositories have been updated"
 echo "All repositories have been updated!"
