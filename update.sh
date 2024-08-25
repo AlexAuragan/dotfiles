@@ -22,10 +22,10 @@ update_repo() {
     git commit -m "$commit_msg" || echo "No changes to commit in $repo_dir"
 
     # Pull latest changes from the remote
-    git pull origin master || { notify-send "Git Update Error" "Failed to pull in $repo_dir"; return 1; }
+    git pull || { notify-send "Git Update Error" "Failed to pull in $repo_dir"; return 1; }
 
     # Push local changes to the remote
-    git push origin master || { notify-send "Git Update Error" "Failed to push in $repo_dir"; return 1; }
+    git push || { notify-send "Git Update Error" "Failed to push in $repo_dir"; return 1; }
 }
 
 # Update Vault repository
