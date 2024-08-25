@@ -14,6 +14,7 @@ ags_style="$HOME/.config/ags/user/style.css"
 SCRIPTSDIR="$HOME/.config/hypr/scripts"
 notif="$HOME/.config/swaync/images/bell.png"
 wallust_rofi="$HOME/.config/wallust/templates/colors-rofi.rasi"
+tmux="$HOME/.tmux.conf"
 
 kitty_conf="$HOME/.config/kitty/kitty.conf"
 omp_conf="$HOME/.config/oh-my-posh/"
@@ -59,6 +60,14 @@ if [ "$next_mode" = "Dark" ]; then
 else
     sed -i 's/^palette = .*/palette = "'"$pallete_light"'"/' "$wallust_config" 
 fi
+
+# Update tmux theme
+if [ "$next_mode" = "Dark" ]; then
+    sed -i 's/@catppuccin_flavour.*/@catppuccin_flavour '\''mocha'\''/' "$tmux"
+else
+    sed -i 's/@catppuccin_flavour.*/@catppuccin_flavour '\''latte'\''/' "$tmux"
+fi
+tmux source-file "$tmux"
 
 # Function to set Waybar style
 set_waybar_style() {
@@ -188,7 +197,7 @@ set_custom_gtk_theme() {
     fi
 
     gsettings set $color_setting "$color_scheme"
-
+    echo "GTK color scheme set to $color_scheme"
     themes=()
     icons=()
 

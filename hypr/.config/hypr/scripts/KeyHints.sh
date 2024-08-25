@@ -48,7 +48,7 @@ yad --width=$dynamic_width --height=$dynamic_height \
 " Shift Q " "kills an active window" "(kill)" \
 " Z" "Desktop Zoom" "(pyprland)" \
 " Alt V" "Clipboard Manager" "(cliphist)" \
-" V" "Launch Brave" "(Brave)" \
+" V" "Launch Web Browser" "(Zen)" \
 " P" "Launch PyCharm" "(PyCharm)" \
 " R" "Choose wallpaper" "(Wallpaper Menu)" \
 " Shift R" "Choose wallpaper effects" "(imagemagick + swww)" \

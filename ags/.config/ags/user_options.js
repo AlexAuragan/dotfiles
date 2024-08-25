@@ -4,6 +4,13 @@
 //   options listed in this file will override the default ones in the above file
 
 const userConfigOptions = {
+    'icons': {
+        substitutions: {
+            'code': "visual-studio-code",
+            'preferences-desktop-theme': "org.gnome.tweaks",
+ 
+    }
+  }
 }
 
 export default userConfigOptions;

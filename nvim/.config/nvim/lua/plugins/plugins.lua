@@ -238,4 +238,7 @@ return {
       "vhyrro/luarocks.nvim"
     }
   },
+  {
+    "folke/which-key.nvim"
+  }
 }
