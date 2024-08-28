@@ -12,4 +12,4 @@ kitty/.config/kitty/kitty.conf.bak
 oh-my-posh/.config/oh-my-posh/zen.toml
 waybar/.config/waybar/style.css
 waybar/.config/waybar/wallust/
-
+tmux/.config/tmux/plugins/tmux/
