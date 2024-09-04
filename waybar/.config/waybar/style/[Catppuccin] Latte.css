@@ -46,7 +46,7 @@ window#waybar.empty #window {
 #taskbar button:hover,
 #workspaces button:hover {
 	border-radius: 10px;
-	color: @overlay0;
+	color: @text;
 	background-color: @surface0;
  	padding-left: 2px;
     padding-right: 2px;
@@ -69,6 +69,9 @@ window#waybar.empty #window {
     transition: all 0.3s cubic-bezier(.55,-0.68,.48,1.682);
 }
 
+#workspaces button.active {
+  color: @text
+}
 #workspaces button.urgent {
 	color: @red;
  	border-radius: 0px;
