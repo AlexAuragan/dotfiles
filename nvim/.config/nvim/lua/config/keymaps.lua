@@ -14,41 +14,47 @@ vim.keymap.set('n', '<leader>fw', builtin.live_grep, {})
 
 -- This script detects the system theme and adjusts the background in Neovim
 _G.detect_system_theme = function ()
-    local handle, result, theme
+  local handle, result, theme
 
-    -- Linux (Gnome based environments)
-    handle = io.popen("gsettings get org.gnome.desktop.interface color-scheme")
+  -- Linux (Gnome based environments)
+  handle = io.popen("gsettings get org.gnome.desktop.interface color-scheme")
+  if handle == nil then
+    return
+  end
+  result = handle:read("*a")
+  handle:close()
+
+  if result and result:find("dark") then
+    theme = "dark"
+  elseif result and result:find("light") then
+    theme = "light"
+  else
+    -- macOS (via AppleScript)
+    handle = io.popen([[osascript -e 'tell application "System Events" to tell appearance preferences to get dark mode']])
+    if handle == nil then
+      return
+    end
     result = handle:read("*a")
     handle:close()
 
-    if result and result:find("dark") then
-        theme = "dark"
-    elseif result and result:find("light") then
-        theme = "light"
+    if result and result:find("true") then
+      theme = "dark"
     else
-        -- macOS (via AppleScript)
-        handle = io.popen([[osascript -e 'tell application "System Events" to tell appearance preferences to get dark mode']])
-        result = handle:read("*a")
-        handle:close()
-
-        if result and result:find("true") then
-            theme = "dark"
-        else
-            theme = "light"
-        end
+      theme = "light"
     end
+  end
 
-    return theme
+  return theme
 end
 
 _G.apply_theme = function()
-    local theme = detect_system_theme()
+  local theme = detect_system_theme()
 
-    if theme == "dark" then
-        vim.o.background = "dark"
-    elseif theme == "light" then
-        vim.o.background = "light"
-    end
+  if theme == "dark" then
+    vim.o.background = "dark"
+  elseif theme == "light" then
+    vim.o.background = "light"
+  end
 end
 
 
