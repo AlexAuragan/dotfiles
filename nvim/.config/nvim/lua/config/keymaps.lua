@@ -77,4 +77,3 @@ vim.api.nvim_set_keymap('n', '<leader>cd', '<cmd>lua clear_diagnostics()<CR>', {
 -- UFO folding shortcuts
 vim.keymap.set('n', 'zp', require('ufo').openAllFolds)
 vim.keymap.set('n', 'zf', require('ufo').closeAllFolds)
-

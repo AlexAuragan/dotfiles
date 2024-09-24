@@ -229,7 +229,15 @@ return {
       provider_selector = function (bufnr, filetype, butpye)
         return {'treesitter', 'indent'}
       end
-    }
+    },
+    config = function ()
+      ---@diagnostic disable: missing-fields
+      require('ufo').setup({
+        provider_selector = function(bufnr, filetype, buftype)
+          return {'treesitter', 'indent'}
+        end,
+      })
+    end
   },
   { -- display images in terminal, TODO fix.
     "3rd/image.nvim",
@@ -274,5 +282,20 @@ return {
   },
   {
     "folke/which-key.nvim"
-  }
+  },
+  {'nvim-neo-tree/neo-tree.nvim',
+    options = function ()
+      require("neo-tree").setup({
+        event_handlers = {
+          {
+            event = "file_open_requested",
+            handler = function()
+              require("neo-tree.command").execute({ action = "close" })
+            end
+          },
+
+        }
+      })
+    end
+  },
 }
