@@ -33,7 +33,11 @@ return {
   },
 
   -- disable trouble
-  { "folke/trouble.nvim", enabled = false },
+  {
+    "folke/trouble.nvim",
+    enabled = false,
+    opts = { use_diagnostic_signs = true },
+  },
 
   -- override nvim-cmp and add cmp-emoji
   {
@@ -99,6 +103,30 @@ return {
               }
             )
 
+          end,
+        },
+        lua_ls = {
+          on_attach = function(client, bufnr)
+            -- Your custom on_attach logic for lua_ls (if needed)
+          end,
+          settings = {
+            Lua = {
+              runtime = {
+                version = 'LuaJIT',
+              },
+              diagnostics = {
+                globals = {'vim'},
+              },
+              workspace = {
+                library = vim.api.nvim_get_runtime_file("", true),
+              },
+              telemetry = {
+                enable = false,
+              },
+            },
+          },
+          root_dir = function()
+            return vim.fn.getcwd() -- Set the root directory to the current working directory
           end,
         },
       },
@@ -193,7 +221,19 @@ return {
             hide_dotfiles = false,
             hide_gitignored = false
       }
-    }
+    },
+    config = function()
+      require("neo-tree").setup({
+        event_handlers = {
+          {
+            event = "file_open_requested",
+            handler = function()
+              require("neo-tree.command").execute({action = "close"})
+            end
+          },
+        }
+      })
+    end
   },
   { -- add color preview
     "norcalli/nvim-colorizer.lua",
@@ -239,7 +279,7 @@ return {
       })
     end
   },
-  { -- display images in terminal, TODO fix.
+  { -- Allow to display images inside the terminal
     "3rd/image.nvim",
     backend = "kitty",
     dependencies = {
@@ -283,19 +323,13 @@ return {
   {
     "folke/which-key.nvim"
   },
-  {'nvim-neo-tree/neo-tree.nvim',
-    options = function ()
-      require("neo-tree").setup({
-        event_handlers = {
-          {
-            event = "file_open_requested",
-            handler = function()
-              require("neo-tree.command").execute({ action = "close" })
-            end
-          },
-
-        }
-      })
-    end
+  {
+    "voldikss/vim-floaterm",
+    config = function ()
+      vim.keymap.set("n", "<leader>ft", "<cmd>:floatermNew -cd %:p:h<CR> -height=0.7 --width=0.8 --wintype=float --name=floaterm --position=center --autoclose=2",
+        {desc= "Open Floaterm"})
+      vim.keymap.set("n", "<leader>ft", "<cmd>:FloatermToggle<CR>", {desc = "Toggle Floaterm"})
+      vim.keymap.set("t", "<leader>ft", "<cmd>:FloatermToggle<CR>", {desc = "Toggle Floaterm"})
+    end,
   },
 }
