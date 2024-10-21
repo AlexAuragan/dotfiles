@@ -56,9 +56,9 @@ notify_user() {
 
 # Use sed to replace the palette setting in the wallust config file
 if [ "$next_mode" = "Dark" ]; then
-    sed -i 's/^palette = .*/palette = "'"$pallete_dark"'"/' "$wallust_config" 
+    sed -i 's/^palette = .*/palette = "'"$pallete_dark"'"/' "$wallust_config"
 else
-    sed -i 's/^palette = .*/palette = "'"$pallete_light"'"/' "$wallust_config" 
+    sed -i 's/^palette = .*/palette = "'"$pallete_light"'"/' "$wallust_config"
 fi
 
 # Update tmux theme
@@ -75,7 +75,7 @@ set_waybar_style() {
     waybar_styles="$HOME/.config/waybar/style"
     waybar_style_link="$HOME/.config/waybar/style.css"
     style_prefix="\\[${theme}\\].*\\.css$"
-    
+
     if [ "$next_mode" = "Dark" ]; then
       style_prefix="\\[Mocha\\].*\\.css$"
     else
@@ -105,9 +105,9 @@ notify_user "$next_mode"
 # 	sed -i '/@define-color noti-bg-alt/s/#.*;/#F0F0F0;/' "${swaync_style}"
 # fi
 if [ "$next_mode" = "Dark" ]; then
-  cp "$swaync_themes/mocha.css" "$swaync_style" 
+  cp "$swaync_themes/mocha.css" "$swaync_style"
 else
-  cp "$swaync_themes/latte.css" "$swaync_style" 
+  cp "$swaync_themes/latte.css" "$swaync_style"
 fi
 swaync-client -rs
 
@@ -134,7 +134,7 @@ fi
 if [ "$next_mode" = "Dark" ]; then
   cp "$omp_conf/zen-mocha.toml" "$omp_conf/zen.toml"
 else
-  cp "$omp_conf/zen-latte.toml" "$omp_conf/zen.toml" 
+  cp "$omp_conf/zen-latte.toml" "$omp_conf/zen.toml"
 fi
 eval "$(oh-my-posh init $(basename $SHELL) --config $omp_conf/zen.toml)"
 
@@ -196,7 +196,7 @@ set_custom_gtk_theme() {
         return 1
     fi
 
-    gsettings set $color_setting "$color_scheme"
+    gsettings set "$color_setting" "$color_scheme"
     echo "GTK color scheme set to $color_scheme"
     themes=()
     icons=()
@@ -236,7 +236,7 @@ set_custom_gtk_theme() {
         fi
         echo "Selected icon theme for $mode mode: $selected_icon"
         gsettings set $icon_setting "$selected_icon"
-        
+
         ## QT5ct icon_theme
         sed -i "s|^icon_theme=.*$|icon_theme=$selected_icon|" "$HOME/.config/qt5ct/qt5ct.conf"
         sed -i "s|^icon_theme=.*$|icon_theme=$selected_icon|" "$HOME/.config/qt6ct/qt6ct.conf"
@@ -262,11 +262,10 @@ sleep 0.5
 # Run remaining scripts
 ${SCRIPTSDIR}/WallustSwww.sh
 sleep 1
-${SCRIPTSDIR}/Refresh.sh 
+${SCRIPTSDIR}/Refresh.sh
 
 sleep 0.3
 # Display notifications for theme and icon changes
 notify-send -u normal -i "$notif" "Themes in $next_mode Mode"
 
 exit 0
-
