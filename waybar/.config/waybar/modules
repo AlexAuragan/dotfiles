@@ -210,7 +210,7 @@
 		"class<libreoffice-writer>": " ",
 		"class<libreoffice-startcenter>": "󰏆 ",
 		"class<com.obsproject.Studio>": " "
-		}   
+		}
 },
 // for Camilla or Spanish
 "hyprland/workspaces#cam": {
@@ -239,7 +239,7 @@
 		"8":"Otto",
 		"9":"Nove",
 		"10":"Dieci"
-	}	
+	}
 },
 // GROUP
 "group/motherboard": {
@@ -259,8 +259,8 @@
 		"transition-left-to-right": true
         },
 	"modules": [
-		"temperature",		
-		"cpu",	
+		"temperature",
+		"cpu",
 		"memory",
 		"disk",
 	]
@@ -368,8 +368,9 @@
 "clock": {
 	"interval": 1,
     //"format": " {:%I:%M %p}", // AM PM format
-    "format": " {:%H:%M:%S}", // 24H
-	"format-alt": " {:%H:%M   %Y, %d %B, %A}",
+  "format": " {:%H:%M:%S}", // 24H
+	// "timezone": "Europe/Paris"
+  "format-alt": " {:%H:%M   %Y, %d %B, %A}",
 	"tooltip-format": "<tt><small>{calendar}</small></tt>",
 	"calendar": {
 		"mode": "year",
