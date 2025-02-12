@@ -210,7 +210,7 @@
 		"class<libreoffice-writer>": " ",
 		"class<libreoffice-startcenter>": "󰏆 ",
 		"class<com.obsproject.Studio>": " "
-		}   
+		}
 },
 // for Camilla or Spanish
 "hyprland/workspaces#cam": {
@@ -239,7 +239,7 @@
 		"8":"Otto",
 		"9":"Nove",
 		"10":"Dieci"
-	}	
+	}
 },
 // GROUP
 "group/motherboard": {
@@ -259,8 +259,8 @@
 		"transition-left-to-right": true
         },
 	"modules": [
-		"temperature",		
-		"cpu",	
+		"temperature",
+		"cpu",
 		"memory",
 		"disk",
 	]
@@ -731,7 +731,7 @@
 "custom/swaync": {
 	"tooltip": true,
 	"tooltip-format": "Left Click: Launch Notification Center\nRight Click: Do not Disturb",
-	"format": "{icon} {}",
+	"format": "{icon}",
 	"format-icons": {
 		"notification": "<span foreground='red'><sup></sup></span>",
 		"none": "",
@@ -765,8 +765,8 @@
 	"format-alt-click": "click",
 	"interval": 3600,
 	"return-type": "json",
-	"exec": "~/.config/hypr/UserScripts/Weather.sh",
-	//"exec": "~/.config/hypr/UserScripts/Weather.py",
+	//"exec": "~/.config/hypr/UserScripts/Weather.sh",
+	"exec": "~/.config/hypr/UserScripts/Weather.py",
 	"exec-if": "ping wttr.in -c1",
 	"tooltip": true,
 },
