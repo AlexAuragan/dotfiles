@@ -52,6 +52,7 @@ return {
   -- change some telescope options and a keymap to browse plugin files
   {
     "nvim-telescope/telescope.nvim",
+    lazy = false,
     keys = {
       -- add a keymap to browse plugin files
       -- stylua: ignore
@@ -160,7 +161,7 @@ return {
   -- would overwrite `ensure_installed` with the new value.
   -- If you'd rather extend the default config, use the code below instead:
   {
-    "gnvim-treesitter/nvim-treesitter",
+    "nvim-treesitter/nvim-treesitter",
     opts = function(_, opts)
       -- add tsx and treesitter
       vim.list_extend(opts.ensure_installed, {
@@ -189,9 +190,6 @@ return {
       }
     end,
   },
-
-  -- add jsonls and schemastore packages, and setup treesitter for json, json5 and jsonc
-  { import = "lazyvim.plugins.extras.lang.json" },
 
   -- add any tools you want to have installed below
   {
@@ -231,6 +229,14 @@ return {
               require("neo-tree.command").execute({action = "close"})
             end
           },
+        },
+        filesystem = {
+          filtered_items = {
+            visible = true,
+            hide_dotfiles = false,
+            hide_gitignored = false,
+          },
+          cwd_target = "buffer",
         }
       })
     end
