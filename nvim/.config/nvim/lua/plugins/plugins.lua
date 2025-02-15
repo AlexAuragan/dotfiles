@@ -231,6 +231,15 @@ return {
               require("neo-tree.command").execute({action = "close"})
             end
           },
+        },
+        filesystem = {
+          filtered_items = {
+            visible = true, -- when true, they will just be displayed differently than normal items
+            hide_dotfiles = false,
+            hide_gitignored = false,
+          },
+          follow_current_file = true, -- Make neo-tree open in the directory of the current file
+          cwd_target = "buffer", -- Ensures it uses the current buffer's directory
         }
       })
     end
