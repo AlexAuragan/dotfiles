@@ -17,21 +17,16 @@ return {
       vim.cmd.colorscheme("catppuccin")
     end,
   },
-  -- Configure LazyVim to load gruvbox
   {
     "LazyVim/LazyVim",
     opts = {
       colorscheme = "catppuccin",
     },
   },
-
-  -- change trouble config
   {
-    "folke/trouble.nvim",
-    -- opts will be merged with the parent spec
-    opts = { use_diagnostic_signs = true },
+    "goolord/alpha-nvim",
+    enabled = false,  -- This disables the default LazyVim dashboard
   },
-
   -- disable trouble
   {
     "folke/trouble.nvim",
@@ -337,5 +332,30 @@ return {
       vim.keymap.set("n", "<leader>ft", "<cmd>:FloatermToggle<CR>", {desc = "Toggle Floaterm"})
       vim.keymap.set("t", "<leader>ft", "<cmd>:FloatermToggle<CR>", {desc = "Toggle Floaterm"})
     end,
+  },
+  { -- https://github.com/folke/snacks.nvim/tree/main, bunch of QOL plugins merged together
+    "folke/snacks.nvim",
+    lazy = false,
+    --@type snacks.config
+    bigfile = { enabled = true },
+    dashboard = { enabled = true },
+    debug = { enabled = true },
+    dim = { enabled = true },
+    image = { enabled = true },
+    profiler = { enabled = true },
+    scroll = { enabled = true },
+    util = { enabled = true },
+    zen = { enabled = true },
+    opts = {
+      dashboard = {
+        header = [[]],
+        sections = {
+          { section = "header" },
+          { section = "keys", gap = 1 },
+          { icon = " ", title = "Recent Files", section = "recent_files", indent = 2, padding = { 2, 2 } },
+          { icon = " ", title = "Projects", section = "projects", indent = 2, padding = 2 },
+          { section = "startup" },
+        },
+      }    }
   },
 }
