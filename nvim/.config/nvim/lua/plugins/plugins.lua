@@ -338,7 +338,7 @@ return {
     lazy = false,
     --@type snacks.config
     bigfile = { enabled = true },
-    dashboard = { enabled = true },
+    dashboard = { enabled = true, example = "github" },
     debug = { enabled = true },
     dim = { enabled = true },
     image = { enabled = true },
@@ -346,16 +346,5 @@ return {
     scroll = { enabled = true },
     util = { enabled = true },
     zen = { enabled = true },
-    opts = {
-      dashboard = {
-        header = [[]],
-        sections = {
-          { section = "header" },
-          { section = "keys", gap = 1 },
-          { icon = " ", title = "Recent Files", section = "recent_files", indent = 2, padding = { 2, 2 } },
-          { icon = " ", title = "Projects", section = "projects", indent = 2, padding = 2 },
-          { section = "startup" },
-        },
-      }    }
-  },
+  }
 }
