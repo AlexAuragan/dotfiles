@@ -31,28 +31,36 @@ notify_user() {
   notify-send -e -h string:x-canonical-private-synchronous:brightness_notif -h int:value:$current -u low -i "$icon" "Brightness : $current%"
 }
 
-# Change brightness
+# Change brightness based on screen ID
 change_backlight() {
-  brightnessctl set "$1" -n
-  current=$(get_backlight | sed 's/%//')
-  # Set the second monitor's brightness using ddcutil
-  ddcutil setvcp 10 "$current" &
-  get_icon && notify_user
+  screen_id="$1"
+  value="$2"
 
+  if [ "$screen_id" = "0" ]; then
+    brightnessctl set "$value" -n
+  elif [ "$screen_id" = "1" ]; then
+    ddcutil setvcp 10 "$(echo "$value" | sed 's/%//')" --bus=13
+  else
+    echo "Invalid screen ID. Use 0 for internal display and 1 for external."
+    exit 1
+  fi
+
+  get_icon && notify_user
 }
 
 # Execute accordingly
 case "$1" in
 "--get")
-  get_backlight
+  get_backlight # TODO add monitor argument
   ;;
 "--inc")
-  change_backlight "+10%"
+  change_backlight "$2" "+10%"
   ;;
 "--dec")
-  change_backlight "10%-"
+  change_backlight "$2" "10%-"
   ;;
 *)
-  get_backlight
+  echo "Usage: $0 [--get | --inc screen_id | --dec screen_id]"
+  exit 1
   ;;
 esac
