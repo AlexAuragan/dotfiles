@@ -129,6 +129,15 @@ return {
             return vim.fn.getcwd() -- Set the root directory to the current working directory
           end,
         },
+      rust_analyzer = {
+          settings = {
+            ["rust-analyzer"] = {
+              checkOnSave = { command = "clippy" },
+              procMacro = { enable = true },
+              cargo = { allFeatures = true }
+            }
+          }
+        },
       },
     },
   },
