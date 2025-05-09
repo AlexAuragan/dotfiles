@@ -1,0 +1,233 @@
+{
+	"name": "alt-catppuccin-vsc",
+	"displayName": "Alt Catppuccin for VSCode",
+	"publisher": "dooez",
+	"description": "Catppuccin with Monokai, Dark One and more syntax styles",
+	"version": "2.7.4",
+	"engines": {
+		"vscode": "^1.70.0",
+		"node": ">=16.0.0 <17.0.0"
+	},
+	"categories": [
+		"Themes"
+	],
+	"extensionKind": [
+		"ui",
+		"workspace"
+	],
+	"activationEvents": [
+		"*"
+	],
+	"capabilities": {
+		"untrustedWorkspaces": {
+			"supported": true
+		},
+		"virtualWorkspaces": true
+	},
+	"main": "dist/main.js",
+	"browser": "dist/browser.js",
+	"contributes": {
+		"themes": [
+			{
+				"label": "Alt Catppuccin Mocha",
+				"uiTheme": "vs-dark",
+				"path": "./themes/mocha.json"
+			},
+			{
+				"label": "Alt Catppuccin Macchiato",
+				"uiTheme": "vs-dark",
+				"path": "./themes/macchiato.json"
+			},
+			{
+				"label": "Alt Catppuccin Frappé",
+				"uiTheme": "vs-dark",
+				"path": "./themes/frappe.json"
+			},
+			{
+				"label": "Alt Catppuccin Latte",
+				"uiTheme": "vs",
+				"path": "./themes/latte.json"
+			}
+		],
+		"configuration": [
+			{
+				"title": "Alt Catppuccin",
+				"properties": {
+					"alt-catppuccin.boldKeywords": {
+						"type": "boolean",
+						"default": true,
+						"markdownDescription": "Controls whether to use **bold** for keywords."
+					},
+					"alt-catppuccin.italicKeywords": {
+						"type": "boolean",
+						"default": true,
+						"markdownDescription": "Controls whether to use *italics* for keywords."
+					},
+					"alt-catppuccin.italicComments": {
+						"type": "boolean",
+						"default": true,
+						"markdownDescription": "Controls whether to use *italics* for comments."
+					},
+					"alt-catppuccin.colorOverrides": {
+						"type": "object",
+						"default": {},
+						"markdownDescription": "Custom color overrides. Assign your own hex codes to palette colors. See [the docs](https://github.com/catppuccin/vscode#override-palette-colors) for reference.",
+						"$ref": "https://raw.githubusercontent.com/catppuccin/vscode/main/schemas/colorOverrides.schema.json"
+					},
+					"alt-catppuccin.customUIColors": {
+						"type": "object",
+						"default": {},
+						"markdownDescription": "Customize UI colors. Map `workbench.colorCustomizations` to palette colors. See [the docs](https://github.com/catppuccin/vscode#use-palette-colors-on-workbench-elements-ui) for reference."
+					},
+					"alt-catppuccin.accentColor": {
+						"type": "string",
+						"default": "mauve",
+						"description": "Controls which accent color to use.",
+						"enum": [
+							"rosewater",
+							"flamingo",
+							"pink",
+							"mauve",
+							"red",
+							"maroon",
+							"peach",
+							"yellow",
+							"green",
+							"teal",
+							"sky",
+							"sapphire",
+							"blue",
+							"lavender"
+						]
+					},
+					"alt-catppuccin.syntaxMode": {
+						"type": "string",
+						"default": "monokai",
+						"description": "Controls how the syntax highlighting should be styled.",
+						"enum": [
+							"default",
+							"monokai",
+							"dark-one",
+							"ms"
+						],
+						"enumDescriptions": [
+							"The default Catppuccin syntax highlighting.",
+							"Sytax highlighting based on Monokai theme using Catppuccin palette.",
+							"Sytax highlighting based on Dark One theme using Catppuccin palette.",
+							"Sytax highlighting based on Microsoft theme using Catppuccin palette."
+						]
+					},
+					"alt-catppuccin.workbenchMode": {
+						"type": "string",
+						"default": "default",
+						"description": "Controls how the workbench should be styled.",
+						"enum": [
+							"default",
+							"flat"
+						],
+						"enumDescriptions": [
+							"The default look, using 3 shades of the base color.",
+							"A more flat look, using 2 shades of the base color."
+						]
+					},
+					"alt-catppuccin.bracketMode": {
+						"type": "string",
+						"default": "rainbow",
+						"description": "Controls how bracket pairs should be themed",
+						"enum": [
+							"rainbow",
+							"dimmed",
+							"monochromatic",
+							"neovim"
+						],
+						"enumDescriptions": [
+							"Uses 6 rainbow colors for matching bracket pairs.",
+							"Uses the same 6 rainbow colors as `rainbow`, but has a dimmed appearance.",
+							"A monochromatic, grey appearance for matching bracket pairs.",
+							"Uses the same bracket pair colors as our neovim port."
+						]
+					},
+					"alt-catppuccin.extraBordersEnabled": {
+						"type": "boolean",
+						"default": false,
+						"description": "Controls whether borders should be enabled on some additional UI elements."
+					}
+				}
+			}
+		]
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/Dooez/alt-catppuccin-vscode.git"
+	},
+	"bugs": {
+		"url": "https://github.com/Dooez/alt-catppuccin-vscode/issues"
+	},
+	"icon": "icon.png",
+	"license": "MIT",
+	"devDependencies": {
+		"@catppuccin/palette": "^0.1.8",
+		"@types/node": "^16.0.0",
+		"@types/vscode": "^1.70.0",
+		"@typescript-eslint/eslint-plugin": "^5.57.1",
+		"@typescript-eslint/parser": "^5.57.1",
+		"@vscode/vsce": "^2.18.0",
+		"eslint": "^8.37.0",
+		"eslint-config-prettier": "^8.8.0",
+		"eslint-plugin-prettier": "^4.2.1",
+		"husky": ">=6",
+		"lint-staged": ">=13.2.0",
+		"prettier": "^2.8.7",
+		"ts-node": "^10.9.1",
+		"tsup": "^6.7.0",
+		"typescript": "^5.0.3"
+	},
+	"lint-staged": {
+		"*.ts": "eslint --cache --fix",
+		"*.{ts,json,md}": "prettier --write"
+	},
+	"eslintConfig": {
+		"env": {
+			"es2021": true
+		},
+		"extends": [
+			"eslint:recommended",
+			"plugin:@typescript-eslint/recommended",
+			"plugin:prettier/recommended"
+		],
+		"overrides": [],
+		"parser": "@typescript-eslint/parser",
+		"parserOptions": {
+			"ecmaVersion": "latest",
+			"project": "tsconfig.json",
+			"sourceType": "module"
+		},
+		"plugins": [
+			"@typescript-eslint",
+			"prettier"
+		],
+		"rules": {
+			"@typescript-eslint/no-empty-function": "off",
+			"@typescript-eslint/explicit-module-boundary-types": "off",
+			"@typescript-eslint/no-explicit-any": "off"
+		}
+	},
+	"scripts": {
+		"compile": "tsup",
+		"compile:theme": "ts-node src/hooks/generateThemes.ts",
+		"build": "yarn compile:theme && yarn compile",
+		"postbuild": "prettier -w ./themes",
+		"dev": "DEBUG=1 yarn build",
+		"lint": "eslint . --ext .ts",
+		"prepare": "husky install",
+		"package": "vsce package --allow-star-activation --yarn"
+	},
+	"dependencies": {
+		"yarn": "^1.22.19"
+	},
+	"__metadata": {
+		"installedTimestamp": 1746782107445,
+		"targetPlatform": "undefined",
+		"size": 6201248
+	}
+}
