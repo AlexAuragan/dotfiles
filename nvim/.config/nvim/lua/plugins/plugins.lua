@@ -161,6 +161,8 @@ return {
         "typescript",
         "vim",
         "yaml",
+        "latex",
+        "bibtex",
       },
     },
   },
@@ -350,4 +352,13 @@ return {
       vim.keymap.set("t", "<leader>ft", "<cmd>:FloatermToggle<CR>", {desc = "Toggle Floaterm"})
     end,
   },
+  {
+    -- LaTeX editor in neovim
+    "lervag/vimtex",
+    lazy = false,
+    init = function ()
+      vim.g.vimtex_mappings_disableimtex_view_method = "zathura"
+      vim.g.vimtex_compiler_method = "latexmk"
+    end
+  }
 }
