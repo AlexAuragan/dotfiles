@@ -1,0 +1,40 @@
+/* ---- 💫 https://github.com/JaKooLit 💫 ---- */
+/* Main Config 1080p */
+
+@import "~/.config/rofi/master-config.rasi"
+
+/* ---- Configuration ---- */
+configuration {
+	font: "Fira Code SemiBold 12";
+  show-icons: true;
+  icon-theme: "hicolor";
+}
+
+/* ---- Window ---- */
+window {
+    width:	60%;
+}
+/* ---- Listview ---- */
+listview {
+  columns: 6;
+  lines: 5;
+  fixed-height:	true;
+}
+
+/* ---- Element ---- */
+element {
+  orientation: vertical;
+  padding: 12px 0px 0px 0px;
+  spacing: 6px;
+  border-radius: 12px;
+}
+
+element-icon {
+  size: 48px;
+}
+
+element-text {
+  font: "Fira Code SemiBold 12";
+  vertical-align: 0.5;
+  horizontal-align: 0.5;
+}
