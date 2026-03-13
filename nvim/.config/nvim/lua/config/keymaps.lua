@@ -2,12 +2,11 @@
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
 
-local builtin = require("telescope.builtin")
-vim.keymap.set("n", "<leader>ff", builtin.find_files, {})
-vim.keymap.set("n", "<leader>fg", builtin.live_grep, {})
-vim.keymap.set("n", "<leader>fb", builtin.buffers, {})
-vim.keymap.set("n", "<leader>fh", builtin.help_tags, {})
-vim.keymap.set("n", "<leader>fw", builtin.live_grep, {})
+vim.keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>", { desc = "Find Files" })
+vim.keymap.set("n", "<leader>fg", "<cmd>Telescope live_grep<cr>", { desc = "Grep" })
+vim.keymap.set("n", "<leader>fb", "<cmd>Telescope buffers<cr>", { desc = "Buffers" })
+vim.keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<cr>", { desc = "Help" })
+vim.keymap.set("n", "<leader>fw", "<cmd>Telescope live_grep<cr>", { desc = "Grep Word" })
 
 -- This script detects the system theme and adjusts the background in Neovim
 _G.detect_system_theme = function()
@@ -72,8 +71,11 @@ end
 vim.api.nvim_set_keymap("n", "<leader>cd", "<cmd>lua clear_diagnostics()<CR>", { noremap = true, silent = true })
 
 -- UFO folding shortcuts
-vim.keymap.set("n", "zp", require("ufo").openAllFolds)
-vim.keymap.set("n", "zf", require("ufo").closeAllFolds)
+local ok, ufo = pcall(require, "ufo")
+if ok then
+    vim.keymap.set("n", "zp", ufo.openAllFolds, { desc = "UFO: open all folds" })
+    vim.keymap.set("n", "zf", ufo.closeAllFolds, { desc = "UFO: close all folds" })
+end
 
 -- next and previous buffer
 vim.api.nvim_set_keymap("n", "<C-Tab>", ":bnext<CR>", { noremap = true, silent = true })

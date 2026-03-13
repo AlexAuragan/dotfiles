@@ -3,3 +3,8 @@
 -- Add any additional options here
 
 vim.g.root_spec = { "cwd" }
+
+-- Apply rice color theme
+vim.schedule(function()
+    pcall(vim.cmd, "colorscheme quickshell")
+end)

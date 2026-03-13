@@ -9,19 +9,19 @@
 -- * override the configuration of LazyVim plugins
 return {
   -- catppuccin colorscheme
-  {
-    "catppuccin/nvim",
-    name = "catppuccin",
-    config = function ()
-      require "plugins.config.catppuccin"
-      vim.cmd.colorscheme("catppuccin")
-    end,
-  },
+  -- {
+  --   "catppuccin/nvim",
+  --   name = "catppuccin",
+  --   config = function ()
+  --     require "plugins.config.catppuccin"
+  --     vim.cmd.colorscheme("catppuccin")
+  --   end,
+  -- },
   -- Configure LazyVim to load gruvbox
   {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "catppuccin",
+      colorscheme = "quickshell",
     },
   },
 
@@ -30,6 +30,14 @@ return {
     "folke/trouble.nvim",
     -- opts will be merged with the parent spec
     opts = { use_diagnostic_signs = true },
+  },
+
+  -- edit hex files like webm
+  {
+    'RaafatTurki/hex.nvim',
+    config = function()
+      require("hex").setup()
+    end
   },
 
   -- disable trouble
@@ -73,78 +81,93 @@ return {
   },
 
   -- add pyright to lspconfig
-  {
-    "neovim/nvim-lspconfig",
-    ---@class PluginLspOpts
-    opts = {
-      ---@type lspconfig.options
-      servers = {
-        -- pyright will be automatically installed with mason and loaded with lspconfig
-        pyright = {
-          on_attach = function(client, bufnr)
-            -- Key mapping for hover documentation
-            local opts = { noremap=true, silent=true }
-            vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+{
+  "neovim/nvim-lspconfig",
+  opts = {
+    servers = {
+      pyright = {
+        on_attach = function(_, bufnr)
+          local opts = { noremap = true, silent = true }
+          vim.api.nvim_buf_set_keymap(bufnr, "n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
+        end,
+      },
 
-            -- Customize diagnostics virtual text
-            vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-              vim.lsp.diagnostic.on_publish_diagnostics, {
-                virtual_text = {
-                  prefix = '●', -- Change the prefix if desired
-                  spacing = 4,
-                  severity_limit = 'Warning', -- Show hints only for warnings and above
-                  format = function(diagnostic)
-                    return string.format("%s [%s]", diagnostic.message, diagnostic.source)
-                  end,
-                },
-                signs = true,
-                underline = true,
-                update_in_insert = false,
-              }
-            )
-
-          end,
-        },
-        lua_ls = {
-          on_attach = function(client, bufnr)
-            -- Your custom on_attach logic for lua_ls (if needed)
-          end,
-          settings = {
-            Lua = {
-              runtime = {
-                version = 'LuaJIT',
-              },
-              diagnostics = {
-                globals = {'vim'},
-              },
-              workspace = {
-                library = vim.api.nvim_get_runtime_file("", true),
-              },
-              telemetry = {
-                enable = false,
-              },
-            },
+      lua_ls = {
+        settings = {
+          Lua = {
+            runtime = { version = "LuaJIT" },
+            diagnostics = { globals = { "vim" } },
+            workspace = { library = vim.api.nvim_get_runtime_file("", true) },
+            telemetry = { enable = false },
           },
-          root_dir = function()
-            return vim.fn.getcwd() -- Set the root directory to the current working directory
-          end,
         },
+        -- If you really want cwd as root for lua:
+        root_dir = function()
+          return vim.fn.getcwd()
+        end,
+      },
+
       rust_analyzer = {
-          settings = {
-            ["rust-analyzer"] = {
-              checkOnSave = { command = "clippy" },
-              procMacro = { enable = true },
-              cargo = { allFeatures = true }
-            }
-          }
+        settings = {
+          ["rust-analyzer"] = {
+            checkOnSave = { command = "clippy" },
+            procMacro = { enable = true },
+            cargo = { allFeatures = true },
+          },
+        },
+      },
+
+      qmlls = (function()
+        local util = require("lspconfig.util")
+
+        local function to_fname(x)
+          if type(x) == "number" then
+            return vim.api.nvim_buf_get_name(x)
+          end
+          return x
+        end
+
+        local function safe_root(fname_or_bufnr)
+          local fname = to_fname(fname_or_bufnr)
+          if not fname or fname == "" then
+            return vim.uv.cwd()
+          end
+
+          -- 1) qmldir project
+          local r = util.root_pattern("qmldir")(fname)
+          if r then return r end
+
+          -- 2) git root
+          local git = vim.fs.find(".git", { path = fname, upward = true })[1]
+          if git then return vim.fs.dirname(git) end
+
+          -- 3) fallback: file dir (or cwd)
+          return vim.fs.dirname(fname) or vim.uv.cwd()
+        end
+
+        return {
+          cmd = { "qmlls6", "-E" },
+          filetypes = { "qmljs", "qml" },
+          root_dir = safe_root,
+        }
+      end)(),
+
+      bashls = {
+        settings = {
+          bashIde = {
+            shfmtPath = "shfmt",
+            shfmtArgs = { "-i", "2", "-ci" },
+            shellcheckPath = "shellcheck",
+          },
         },
       },
     },
   },
-
+},
   -- add more treesitter parsers
   {
     "nvim-treesitter/nvim-treesitter",
+    -- lazy = false,
     opts = {
       ensure_installed = {
         "bash",
@@ -161,25 +184,17 @@ return {
         "typescript",
         "vim",
         "yaml",
+        "qmljs",
+        "javascript",
+        "typescript"
       },
     },
   },
-
-  -- since `vim.tbl_deep_extend`, can only merge tables and not lists, the code above
-  -- would overwrite `ensure_installed` with the new value.
-  -- If you'd rather extend the default config, use the code below instead:
   {
-    "gnvim-treesitter/nvim-treesitter",
-    opts = function(_, opts)
-      -- add tsx and treesitter
-      vim.list_extend(opts.ensure_installed, {
-        "tsx",
-        "typescript",
-      })
-    end,
+    "nvim-treesitter/nvim-treesitter-textobjects",
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    lazy = false,
   },
-
-  -- the opts function can also be used to change the default opts:
   {
     "nvim-lualine/lualine.nvim",
     event = "VeryLazy",
@@ -204,7 +219,7 @@ return {
 
   -- add any tools you want to have installed below
   {
-    "williamboman/mason.nvim",
+    "mason-org/mason.nvim",
     opts = {
       ensure_installed = {
         "stylua",
@@ -224,11 +239,11 @@ return {
       "MunifTanjim/nui.nvim",
       "3rd/image.nvim",
     },
-        filesystem = {
-          filtered_items = {
-            visible = true, -- when true, they will just be displayed differently than normal items
-            hide_dotfiles = false,
-            hide_gitignored = false
+    filesystem = {
+      filtered_items = {
+        visible = true, -- when true, they will just be displayed differently than normal items
+        hide_dotfiles = false,
+        hide_gitignored = false
       }
     },
     config = function()
@@ -247,7 +262,7 @@ return {
             hide_dotfiles = false,
             hide_gitignored = false,
           },
-          follow_current_file = true, -- Make neo-tree open in the directory of the current file
+          follow_current_file = { enabled = true}, -- Make neo-tree open in the directory of the current file
           cwd_target = "buffer", -- Ensures it uses the current buffer's directory
         }
       })
@@ -350,4 +365,13 @@ return {
       vim.keymap.set("t", "<leader>ft", "<cmd>:FloatermToggle<CR>", {desc = "Toggle Floaterm"})
     end,
   },
+  { -- Allow markdown preview
+    'MeanderingProgrammer/render-markdown.nvim',
+    dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-mini/mini.nvim' }, -- if you use the mini.nvim suite
+    -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.icons' }, -- if you use standalone mini plugins
+    -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
+    ---@module 'render-markdown'
+    ---@type render.md.UserConfig
+    opts = {},
+  }
 }

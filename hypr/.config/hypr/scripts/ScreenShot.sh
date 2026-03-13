@@ -16,29 +16,27 @@ active_window_path="${dir}/${active_window_file}"
 
 # notify and view screenshot
 notify_view() {
-    if [[ "$1" == "active" ]]; then
-        if [[ -e "${active_window_path}" ]]; then
-            ${notify_cmd_shot} "Screenshot of '${active_window_class}' Saved."
-            "${sDIR}/Sounds.sh" --screenshot
-        else
-            ${notify_cmd_shot} "Screenshot of '${active_window_class}' not Saved"
-            "${sDIR}/Sounds.sh" --error
-        fi
-    elif [[ "$1" == "swappy" ]]; then
+	if [[ "$1" == "active" ]]; then
+		if [[ -e "${active_window_path}" ]]; then
+			${notify_cmd_shot} "Screenshot of '${active_window_class}' Saved."
+			"${sDIR}/Sounds.sh" --screenshot
+		else
+			${notify_cmd_shot} "Screenshot of '${active_window_class}' not Saved"
+			"${sDIR}/Sounds.sh" --error
+		fi
+	elif [[ "$1" == "swappy" ]]; then
 		${notify_cmd_shot} "Screenshot Captured."
-    else
-        local check_file="$dir/$file"
-        if [[ -e "$check_file" ]]; then
-            ${notify_cmd_shot} "Screenshot Saved."
-            "${sDIR}/Sounds.sh" --screenshot
-        else
-            ${notify_cmd_shot} "Screenshot NOT Saved."
-            "${sDIR}/Sounds.sh" --error
-        fi
-    fi
+	else
+		local check_file="$dir/$file"
+		if [[ -e "$check_file" ]]; then
+			${notify_cmd_shot} "Screenshot Saved."
+			"${sDIR}/Sounds.sh" --screenshot
+		else
+			${notify_cmd_shot} "Screenshot NOT Saved."
+			"${sDIR}/Sounds.sh" --error
+		fi
+	fi
 }
-
-
 
 # countdown
 countdown() {
@@ -60,7 +58,7 @@ shot5() {
 	sleep 1 && cd ${dir} && grim - | tee "$file" | wl-copy
 	sleep 1
 	notify_view
-	
+
 }
 
 shot10() {
@@ -77,33 +75,50 @@ shotwin() {
 }
 
 shotarea() {
-	tmpfile=$(mktemp)
-	grim -g "$(slurp)" - >"$tmpfile"
-	if [[ -s "$tmpfile" ]]; then
-		wl-copy <"$tmpfile"
-		mv "$tmpfile" "$dir/$file"
+	if command -v grimblast >/dev/null 2>&1; then
+		tmpfile=$(mktemp)
+		grimblast --freeze save area - >"$tmpfile"
+		if [[ -s "$tmpfile" ]]; then
+			wl-copy <"$tmpfile"
+			mv "$tmpfile" "$dir/$file"
+		fi
+		rm -f "$tmpfile"
+		notify_view
+	else
+		tmpfile=$(mktemp)
+		grim -g "$(slurp)" - >"$tmpfile"
+		if [[ -s "$tmpfile" ]]; then
+			wl-copy <"$tmpfile"
+			mv "$tmpfile" "$dir/$file"
+		fi
+		rm "$tmpfile"
+		notify_view
 	fi
-	rm "$tmpfile"
-	notify_view
 }
 
 shotactive() {
-    active_window_class=$(hyprctl -j activewindow | jq -r '(.class)')
-    active_window_file="Screenshot_${time}_${active_window_class}.png"
-    active_window_path="${dir}/${active_window_file}"
+	active_window_class=$(hyprctl -j activewindow | jq -r '(.class)')
+	active_window_file="Screenshot_${time}_${active_window_class}.png"
+	active_window_path="${dir}/${active_window_file}"
 
-    hyprctl -j activewindow | jq -r '"\(.at[0]),\(.at[1]) \(.size[0])x\(.size[1])"' | grim -g - "${active_window_path}"
+	hyprctl -j activewindow | jq -r '"\(.at[0]),\(.at[1]) \(.size[0])x\(.size[1])"' | grim -g - "${active_window_path}"
 	sleep 1
-    notify_view "active"  
+	notify_view "active"
 }
 
 shotswappy() {
-	tmpfile=$(mktemp)
-	grim -g "$(slurp)" - >"$tmpfile" && "${sDIR}/Sounds.sh" --screenshot && notify_view "swappy"
-	swappy -f - <"$tmpfile"
-	rm "$tmpfile"
+	if command -v grimblast >/dev/null 2>&1; then
+		tmpfile=$(mktemp)
+		grimblast --freeze save area - >"$tmpfile" && "${sDIR}/Sounds.sh" --screenshot && notify_view "swappy"
+		swappy -f - <"$tmpfile"
+		rm -f "$tmpfile"
+	else
+		tmpfile=$(mktemp)
+		grim -g "$(slurp)" - >"$tmpfile" && "${sDIR}/Sounds.sh" --screenshot && notify_view "swappy"
+		swappy -f - <"$tmpfile"
+		rm "$tmpfile"
+	fi
 }
-
 
 if [[ ! -d "$dir" ]]; then
 	mkdir -p "$dir"
