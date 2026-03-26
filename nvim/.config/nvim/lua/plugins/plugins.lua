@@ -20,6 +20,7 @@ return {
   -- Configure LazyVim to load gruvbox
   {
     "LazyVim/LazyVim",
+    imports = "LazyVim.plugins",
     opts = {
       colorscheme = "quickshell",
     },
@@ -290,7 +291,7 @@ return {
       workspaces = {
         {
           name = "Vault",
-          path = "~/Vault/"
+          path = "~/syncthing/obsidian/"
         }
       }
     }

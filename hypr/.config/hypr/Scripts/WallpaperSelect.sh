@@ -1,9 +1,9 @@
 #!/bin/bash
-# /* ---- 💫 https://github.com/JaKooLit 💫 ---- */ 
-# This script for debugging swww and logging the output
+# /* ---- 💫 https://github.com/JaKooLit 💫 ---- */
+# This script for debugging awww and logging the output
 
 # Log file path
-LOGFILE="$HOME/swww_debug.log"
+LOGFILE="/tmp/awww_debug.log"
 
 # WALLPAPERS PATH
 wallDIR="$HOME/Pictures/wallpapers/"
@@ -12,15 +12,15 @@ wallDIR="$HOME/Pictures/wallpapers/"
 SCRIPTSDIR="$HOME/.config/hypr/scripts"
 focused_monitor=$(hyprctl monitors | awk '/^Monitor/{name=$2} /focused: yes/{print name}')
 
-# swww transition config
+# awww transition config
 FPS=60
 TYPE="any"
 DURATION=2
 BEZIER=".43,1.19,1,.4"
-SWWW_PARAMS="--transition-fps $FPS --transition-type $TYPE --transition-duration $DURATION"
+AWWW_PARAMS="--transition-fps $FPS --transition-type $TYPE --transition-duration $DURATION"
 
 # Check if swaybg is running
-if pidof swaybg > /dev/null; then
+if pidof swaybg >/dev/null; then
   pkill swaybg
 fi
 
@@ -48,8 +48,8 @@ menu() {
   done
 }
 
-# initiate swww if not running
-swww query || swww-daemon --format xrgb
+# initiate awww if not running
+awww query || awww-daemon --format xrgb
 
 # Choice of wallpapers
 main() {
@@ -62,7 +62,7 @@ main() {
   # Random choice case
   if [ "$choice" = "$RANDOM_PIC_NAME" ]; then
     RANDOM_PIC="${PICS[$((RANDOM % ${#PICS[@]}))]}"
-    swww img -o $focused_monitor "${RANDOM_PIC}" $SWWW_PARAMS &>> "$LOGFILE"
+    awww img -o $focused_monitor "${RANDOM_PIC}" $AWWW_PARAMS &>>"$LOGFILE"
     exit 0
   fi
 
@@ -77,29 +77,29 @@ main() {
   done
 
   if [[ $pic_index -ne -1 ]]; then
-    
-    echo "Executing: swww img -o $focused_monitor \"${PICS[$pic_index]}\" $SWWW_PARAMS" >> "$LOGFILE"
-    swww img -o $focused_monitor "${PICS[$pic_index]}" $SWWW_PARAMS &>> "$LOGFILE"
+
+    echo "Executing: awww img -o $focused_monitor \"${PICS[$pic_index]}\" $AWWW_PARAMS" >>"$LOGFILE"
+    awww img -o $focused_monitor "${PICS[$pic_index]}" $AWWW_PARAMS &>>"$LOGFILE"
   else
-    echo "Image not found." &>> "$LOGFILE"
+    echo "Image not found." &>>"$LOGFILE"
     exit 1
   fi
 }
 
 # Check if rofi is already running
-if pidof rofi > /dev/null; then
+if pidof rofi >/dev/null; then
   pkill rofi
   exit 0
 fi
 
 # Start debugging
-echo "Starting swww debug at $(date)" >> "$LOGFILE"
+echo "Starting awww debug at $(date)" >>"$LOGFILE"
 main
-echo "swww debug completed at $(date)" >> "$LOGFILE"
+echo "awww debug completed at $(date)" >>"$LOGFILE"
 
 sleep 0.5
 ${SCRIPTSDIR}/WallustSwww.sh
 sleep 0.2
 ${SCRIPTSDIR}/Refresh.sh
 
-echo "Scripts executed at $(date)" >> "$LOGFILE"
+echo "Scripts executed at $(date)" >>"$LOGFILE"
