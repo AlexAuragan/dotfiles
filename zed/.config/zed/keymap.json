@@ -1,0 +1,225 @@
+// Zed keymap
+//
+// For information on binding keys, see the Zed
+// documentation: https://zed.dev/docs/key-bindings
+//
+// To see the default key bindings run `zed: open default keymap`
+// from the command palette.
+[
+    // Overall
+    {
+        "unbind": {
+            "ctrl-shift-w": "workspace::CloseWindow",
+            "ctrl-0": ["zed::ResetBufferFontSize", { "persist": false }],
+            "ctrl-k ctrl-o": "workspace::Open",
+        },
+        "bindings": {
+            "ctrl-w": "tab_switcher::CloseSelectedItem",
+            "ctrl-0": "project_panel::Toggle",
+            "ctrl-1": "agent::Toggle",
+            "ctrl-2": "diagnostics::Deploy",
+            "ctrl-6": "terminal_panel::Toggle",
+            "ctrl-7": "debug_panel::Toggle",
+            "ctrl-8": "outline_panel::Toggle",
+            "ctrl-9": "git_panel::Toggle",
+            "ctrl-shift-o": "workspace::Open",
+        },
+    },
+
+    // Workspace
+    {
+        "context": "Workspace",
+        "bindings": {
+            // "shift shift": "file_finder::Toggle"
+            "ctrl-tab": "pane::ActivateNextItem",
+            "ctrl-shift-tab": "pane::ActivatePreviousItem",
+
+            "ctrl-enter": ["task::Spawn", { "task_name": "uv run" }],
+            "alt-o": [
+                "projects::OpenRecent",
+                {
+                    "create_new_window": false,
+                },
+            ],
+        },
+        "unbind": {
+            "ctrl-tab": "tab_switcher::Toggle",
+            "ctrl-shift-tab": ["tab_switcher::Toggle", { "select_last": true }],
+            "alt-1": "project_panel::ToggleFocus",
+            "alt-5": "debug_panel::ToggleFocus",
+            "alt-7": "outline_panel::ToggleFocus",
+            "ctrl-shift-d": "debug_panel::ToggleFocus",
+            "alt-open": [
+                "projects::OpenRecent",
+                {
+                    "create_new_window": false,
+                },
+            ],
+        },
+    },
+
+    // Editor
+    {
+        "context": "Editor",
+        "unbind": {
+            "ctrl-w": "editor::SelectLargerSyntaxNode",
+            "alt-f7": "editor::FindAllReferences",
+            "ctrl-alt-f7": "editor::FindAllReferences",
+            "alt-shift-f12": "editor::FindAllReferences",
+        },
+    },
+    {
+        "context": "Editor && vim_mode == insert",
+        "bindings": {
+            // "j k": "vim::NormalBefore"
+        },
+    },
+    {
+        "context": "Editor && mode == full",
+        "unbind": {
+            "ctrl-shift-o": "outline::Toggle",
+            "ctrl-f12": "outline::Toggle",
+            "ctrl-enter": "editor::NewlineBelow",
+        },
+    },
+
+    // Settings
+    {
+        "context": "SettingsWindow",
+        "bindings": {
+            "ctrl-w": "workspace::CloseWindow",
+        },
+        "unbind": {
+            "ctrl-7": ["settings_editor::FocusFile", 6],
+        },
+    },
+
+    //////////////////////////////////////////////////////////
+
+    // ThreadsSidebar
+    {
+        "context": "ThreadsSidebar && !Editor",
+        "bindings": {
+            "z x": "editor::ToggleFold",
+        },
+        "unbind": {
+            "z a": "editor::ToggleFold",
+        },
+    },
+
+    // VimControl
+    {
+        "context": "VimControl && !menu",
+        "bindings": {
+            "z x": "editor::ToggleFold",
+            "z shift-x": "editor::ToggleFoldRecursive",
+        },
+        "unbind": {
+            "z a": "editor::ToggleFold",
+            "z shift-x": "editor::ToggleFoldRecursive",
+        },
+    },
+
+    // OutlinePanel
+    {
+        "context": "OutlinePanel && not_editing",
+        "bindings": {
+            "t": "outline_panel::ScrollCursorTop",
+            "b": "outline_panel::ScrollCursorBottom",
+        },
+        "unbind": {
+            "z t": "outline_panel::ScrollCursorTop",
+            "z b": "outline_panel::ScrollCursorBottom",
+            "z z": "outline_panel::ScrollCursorCenter",
+        },
+    },
+
+    // Pane
+    {
+        "context": "Pane",
+        "unbind": {
+            "alt-1": "project_panel::ToggleFocus",
+            "alt-5": "debug_panel::ToggleFocus",
+            "alt-7": "outline_panel::ToggleFocus",
+        },
+    },
+
+    // ProjectPanel
+    {
+        "context": "ProjectPanel && not_editing",
+        "bindings": {
+            "a": "project_panel::NewFile",
+            "r": "project_panel::Rename",
+        },
+        "unbind": {
+            "shift-r": "project_panel::Rename",
+        },
+    },
+
+    // Diagnostics
+    {
+        "context": "Diagnostics",
+        "unbind": {
+            "ctrl-r": "diagnostics::ToggleDiagnosticsRefresh",
+        },
+    },
+
+    // ctrl-enter unbinds
+    {
+        "context": "!AcpThread > Editor && mode == full",
+        "unbind": {
+            "ctrl-enter": "assistant::InlineAssist",
+        },
+    },
+    {
+        "context": "Terminal",
+        "unbind": {
+            "ctrl-enter": "assistant::InlineAssist",
+        },
+    },
+    {
+        "context": "Editor && mode == auto_height",
+        "unbind": {
+            "ctrl-enter": "editor::Newline",
+        },
+    },
+    {
+        "context": "BufferSearchBar && !in_replace > Editor",
+        "unbind": {
+            "ctrl-enter": "editor::Newline",
+        },
+    },
+    {
+        "context": "ProjectSearchBar && !in_replace > Editor",
+        "unbind": {
+            "ctrl-enter": "editor::Newline",
+        },
+    },
+
+    // GitPanel
+    {
+        "context": "GitPanel",
+        "bindings": {
+            "ctrl-k": "git::Commit",
+        },
+        "unbind": {
+            "ctrl-enter": "git::Commit",
+        },
+    },
+    {
+        "context": "GitPanel && ChangesList && !GitBranchSelector",
+        "bindings": {
+            "shift-k": "git::StageAll",
+            "u": "git::UnstageAll",
+            "k": "git::ToggleStaged",
+            "g k": "git::StageRange",
+        },
+        "unbind": {
+            "k": "menu::SelectPrevious",
+            "shift-x": "git::StageAll",
+            "shift-u": "git::UnstageAll",
+            "x": "git::ToggleStaged",
+            "g x": "git::StageRange",
+        },
+    },
+]
