@@ -55,6 +55,7 @@
                     "create_new_window": false,
                 },
             ],
+            "ctrl-?": "agent::ToggleFocus",
         },
     },
 
@@ -117,6 +118,13 @@
         "unbind": {
             "z a": "editor::ToggleFold",
             "z shift-x": "editor::ToggleFoldRecursive",
+        },
+    },
+    {
+        "context": "(VimControl && !menu) || (!Editor && !Terminal)",
+        "unbind": {
+            "g t": "vim::GoToTab", // Replaced by ctrl+tab
+            "g shift-t": "vim::GoToPreviousTab", // Replaced by ctrl+shift+tab
         },
     },
 
